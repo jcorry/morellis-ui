@@ -44,7 +44,7 @@ window.axios = require('axios')
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 if (window.localStorage.getItem('authToken') !== '') {
-  window.axios.defaults.headers.common = {'Authorization': `Bearer ${window.localStorage.getItem('authToken')}`}
+  window.axios.defaults.headers.common = { 'Authorization': `Bearer ${window.localStorage.getItem('authToken')}` }
 }
 
 Vue.use(Vuelidate)
