@@ -13,7 +13,7 @@
               v-bind:color="props.row.status == 'verified' ? 'green-5' : 'amber-5'"
               v-bind:text-color="props.row.status == 'verified' ? 'white' : 'grey-9'"
             >
-              {{props.row.status}}
+              {{ props.row.status }}
             </q-badge>
           </q-td>
         </template>
