@@ -172,6 +172,7 @@ import { POINT_CONVERSION_COMPRESSED, defaultCoreCipherList } from 'constants'
 import { required, minLength, email } from 'vuelidate/lib/validators'
 
 
+
 export default {
   name: 'LayoutDefault',
 
@@ -196,7 +197,8 @@ export default {
           password: this.user.password
         }).then(response => {
             let token = response.data.token
-            window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+            window.localStorage.setItem('authToken', token)
+            window.axios.defaults.headers.common= {'Authorization': `Bearer ${token}`}
             
             this.user.authenticated = true
             this.user.uuid = getUuidFromJwt(token)
@@ -213,6 +215,7 @@ export default {
       this.user.authenticated = false
       this.user.permissions = []
       window.localStorage.removeItem('user')
+      window.localStorage.removeItem('authToken')
       console.log('Logged user out')
     },
   },
@@ -221,7 +224,9 @@ export default {
     if (user) {
       this.user = user
     }
-    console.log(user)
+    if (this.user.authenticated !== true) {
+      this.$router.push('dashboard')
+    }
   },
   data () {
     return {

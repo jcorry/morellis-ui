@@ -5,15 +5,13 @@ import Dashboard from './components/Dashboard.vue'
 import UserList from './components/Users/List.vue'
 import StoreList from './components/Stores/List.vue'
 import FlavorList from './components/Flavors/List.vue'
-
-const vueConfig = require('vue-config')
-
 import './styles/quasar.styl'
 import '@quasar/extras/roboto-font/roboto-font.css'
 import '@quasar/extras/material-icons/material-icons.css'
 import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
 import {
   Quasar,
+  QBadge,
   QCard,
   QCardSection,
   QCardActions,
@@ -30,17 +28,31 @@ import {
   QItem,
   QItemSection,
   QItemLabel,
+  QTable,
+  QTr,
+  QTd,
   QSeparator,
   QForm,
   QInput
 } from 'quasar'
 import Router from 'vue-router'
 
+const vueConfig = require('vue-config')
+
+window.axios = require('axios')
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
+if (window.localStorage.getItem('authToken') !== '') {
+  window.axios.defaults.headers.common = {'Authorization': `Bearer ${window.localStorage.getItem('authToken')}`}
+}
+
 Vue.use(Vuelidate)
 
 Vue.use(Quasar, {
   config: {},
   components: {
+    QBadge,
     QCard,
     QCardSection,
     QCardActions,
@@ -57,6 +69,9 @@ Vue.use(Quasar, {
     QItem,
     QItemSection,
     QItemLabel,
+    QTable,
+    QTr,
+    QTd,
     QSeparator,
     QForm,
     QInput
@@ -107,10 +122,3 @@ new Vue({
   render: h => h(App),
   router
 }).$mount('#app')
-
-window.axios = require('axios')
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-if (window.localStorage.getItem('id_token')) {
-  window.axios.defaults.headers.common['Authorization'] = `Bearer ${window.localStorage.getItem('id_token')}`
-}
